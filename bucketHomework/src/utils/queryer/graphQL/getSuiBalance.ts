@@ -1,5 +1,5 @@
 import { gqlQuery } from "../../../lib/gql";
-
+import { type GetSuiBalanceQuery } from "../../../generated/graphql";
 export const GET_SUI_BALANCE = `
   query GetSuiBalance($address: SuiAddress!) {
     address(address: $address) {
@@ -11,11 +11,11 @@ export const GET_SUI_BALANCE = `
 `;
 
 // get Sui Balance using GraphQL
-export async function getSuiBalance_gql(address: string): Promise<String> {
+export async function getSuiBalance_gql(address: string): Promise<GetSuiBalanceQuery> {
   if (!address) {
     throw new Error("Address is required to fetch SUI balance");
   }
-  const { data } = await gqlQuery<String>(
+  const { data } = await gqlQuery<GetSuiBalanceQuery>(
     GET_SUI_BALANCE,
     { address }
   );

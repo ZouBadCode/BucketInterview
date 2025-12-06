@@ -8,6 +8,5 @@ export async function getSuiBalance_grpc(address: string): Promise<string> {
         owner: address,
         coinType: "0x2::sui::SUI",
     })
-    console.log("suiBalance grpc", suiBalance);
-    return suiBalance
+    return suiBalance.response.balance?.balance?.toString() || "0"; // can't import GetBalanceRequest, GetBalanceResponse, so direactly return string
 }

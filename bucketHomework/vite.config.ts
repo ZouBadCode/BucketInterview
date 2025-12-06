@@ -9,6 +9,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // '@graphql-typed-document-node/core': path.resolve(
+      //   __dirname,
+      //   './node_modules/@graphql-typed-document-node/core/dist/index.mjs',
+      // ),
     },
   },
 })
