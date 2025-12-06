@@ -5,7 +5,9 @@ import type { CoinMetadata } from "@mysten/sui/client";
 import { decimalizeBalance } from "../utils/decimalize";
 import { getSuiBalance_gql } from "../utils/queryer/graphQL/getSuiBalance"
 import { getCoinMetadata_gql } from "../utils/queryer/graphQL/getCoinMetadata";
+import { getSuiBalance_grpc } from "../utils/queryer/grpc/getSuiBalance";
 import { useDAppConfig } from "../stores/dAppConfig";
+
 
 export function Home() {
     const suiClient = useSuiClient();
@@ -38,7 +40,12 @@ export function Home() {
                 setDecimals(meta.coinMetadata.decimals);
             });
         } else if (queryMethod === "gRPC") {
-            
+            const res = getSuiBalance_grpc(currentAccount.address);
+            res.then(balance => {
+                setSuiBalance(balance.response.balance.balance.toString());
+                
+            }
+            )
         }
 
     }, [suiClient, currentAccount?.address, network, queryMethod]);
