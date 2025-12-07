@@ -1,5 +1,6 @@
 import { useSuiClient, useCurrentAccount } from "@mysten/dapp-kit";
-import { getSuiBalance, getCoinMetadata } from "../utils/queryer/json-rpc/getBalance";
+import { getSuiBalance } from "../utils/queryer/json-rpc/getSuiBalance";
+import { getCoinMetadata } from "../utils/queryer/json-rpc/getCoinMetadata";
 import { useEffect, useState } from "react";
 import { decimalizeBalance } from "../utils/decimalize";
 import { getSuiBalance_gql } from "../utils/queryer/graphQL/getSuiBalance"
