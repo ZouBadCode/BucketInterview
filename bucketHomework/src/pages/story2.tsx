@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
+import { getAccountBalance } from "../utils/queryer/backend/getAccountBalance";
 
 export function Story2() {
     const [address, setAddress] = useState("");
 
     useEffect(() => {
-        console.log("Address changed:", address);
+        getAccountBalance(address).then((data) => {
+            console.log("Account Balance Data:", data);
+        })
     }, [address])
     return (
         <div className="min-h-screen flex items-cemter justify-center bg-gray-100">
