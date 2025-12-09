@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import accout from "./routes/account";
+import s3 from "./routes/s3";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use((
 });
 
 app.use("/account", accout);
+app.use("/s3", s3);
 
 const PORT = process.env.PORT || 3000;
 

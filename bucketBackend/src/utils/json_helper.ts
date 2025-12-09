@@ -1,4 +1,3 @@
-// 可以放在一個 utils 檔案，例如 src/utils/json.ts
 export function toJSONSafe<T>(data: T): T {
   if (data === null || data === undefined) {
     return data;
@@ -7,8 +6,7 @@ export function toJSONSafe<T>(data: T): T {
   const t = typeof data;
 
   if (t === "bigint") {
-    // 轉成 string，避免失真
-    return data.toString() as unknown as T;
+    return data.toString() as unknown as T; // Json.Stringify can't process BigInt, so convert it to string
   }
 
   if (t !== "object") {
@@ -19,9 +17,10 @@ export function toJSONSafe<T>(data: T): T {
     return data.map((item) => toJSONSafe(item)) as unknown as T;
   }
 
+  // to handle nested objects recursively
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
-    if (typeof value === "bigint") {
+    if (typeof value === "bigint") {  
       result[key] = value.toString();
     } else if (value && typeof value === "object") {
       result[key] = toJSONSafe(value);

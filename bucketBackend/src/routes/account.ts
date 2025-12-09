@@ -18,8 +18,7 @@ router.post(
       }
 
       const balances = await getAllBalance(address);
-
-      // 🔴 這裡先處理 BigInt 再丟給 res.json
+      console.log(balances);
       return res.json(
         toJSONSafe({
           success: true,
@@ -41,7 +40,29 @@ async function getAllBalance(address: string) {
     owner: address
   });
 
-  return response.response.balances;
+  const balances = response.response.balances ?? [];
+
+  const balancesWithInfo = await Promise.all(
+    balances.map(async (b) => {
+      const coinType = b.coinType ?? "";
+      const coinInfo = await getCoinInfo(coinType);
+      return {
+        coinType,
+        balance: b.balance ?? "",
+        coinInfo,
+      };
+    })
+  );
+
+  return balancesWithInfo;
+}
+
+
+async function getCoinInfo(coinType: string) {
+  const response = await mainnetGRPC.stateService.getCoinInfo({
+    coinType: coinType
+  });
+  return response.response;
 }
 
 export default router;
