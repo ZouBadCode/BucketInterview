@@ -7,7 +7,6 @@ const { networkConfig } = createNetworkConfig({
 	localnet: { url: getFullnodeUrl('localnet') },
 	testnet: { url: getFullnodeUrl('testnet') },
 	mainnet: { url: getFullnodeUrl('mainnet') },
-	suiTrade: { url: '3.114.103.176:443' }
 });
 const queryClient = new QueryClient();
 

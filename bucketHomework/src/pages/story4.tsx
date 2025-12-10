@@ -123,7 +123,7 @@ export function Story4() {
                                 );
 
                             console.log("gRPC Transaction successful:", result);
-                            const digest = result.response.transaction?.digest;
+                            const digest = result.response.transaction?.effects?.digest;
                             if (digest) {
                                 setSuccessDigest(digest);
                             } else {
