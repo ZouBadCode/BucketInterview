@@ -1,10 +1,11 @@
-import { grpcClient } from "../../../lib/gRPC";
+import { getGrpcClient } from "../../../lib/gRPC";
 
-export async function getCoinMetadata_grpc(coinType: string): Promise<number> {
+export async function getCoinMetadata_grpc(coinType: string, network: string): Promise<number> {
     if (!coinType) {
         throw new Error("Coin type is needed to fetch coin metadata");   
     }
-    const coinMetadata = await grpcClient.stateService.getCoinInfo({
+    const client = getGrpcClient(network);
+    const coinMetadata = await client.stateService.getCoinInfo({
         coinType: coinType,
     })
     console.log("gRPC coin metadata:", coinMetadata);

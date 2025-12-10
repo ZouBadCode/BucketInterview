@@ -1,10 +1,11 @@
-import { grpcClient } from "../../../lib/gRPC";
+import { getGrpcClient } from "../../../lib/gRPC";
 
-export async function getSuiBalance_grpc(address: string): Promise<string> {
+export async function getSuiBalance_grpc(address: string, network: string): Promise<string> {
     if (!address) {
         throw new Error("Address is needed to fetch SUI balance");
     }
-    const suiBalance = await grpcClient.stateService.getBalance({
+    const client = getGrpcClient(network);
+    const suiBalance = await client.stateService.getBalance({
         owner: address,
         coinType: "0x2::sui::SUI",
     })

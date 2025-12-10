@@ -7,7 +7,7 @@ import {
 } from "@mysten/dapp-kit";
 import { createSendSui } from "../utils/tx/sendSui";
 import { executeTx_gql } from "../utils/tx/graphQL/sendSui";
-import { grpcClient } from "../lib/gRPC";
+import { getGrpcClient } from "../lib/gRPC";
 import { fromBase64 } from "@mysten/sui/utils";
 
 export function Story4() {
@@ -52,7 +52,7 @@ export function Story4() {
             signAndExecuteTransaction(
                 {
                     transaction: tx,
-                    chain: "sui:testnet",
+                    chain: `sui:${network}`,
                 },
                 {
                     onSuccess: (result) => {
@@ -74,14 +74,15 @@ export function Story4() {
             signTransaction(
                 {
                     transaction: tx,
-                    chain: "sui:testnet",
+                    chain: `sui:${network}`,
                 },
                 {
                     onSuccess: async (signResult) => {
                         try {
                             const result = (await executeTx_gql(
                                 signResult.bytes,
-                                signResult.signature
+                                signResult.signature,
+                                network
                             )) as {
                                 executeTransaction: { effects: { digest: string } };
                             };
@@ -101,14 +102,14 @@ export function Story4() {
             signTransaction(
                 {
                     transaction: tx,
-                    chain: "sui:testnet",
+                    chain: `sui:${network}`,
                 },
                 {
                     onSuccess: async (signResult) => {
                         try {
                             const txBytes = fromBase64(signResult.bytes);
                             const result =
-                                await grpcClient.transactionExecutionService.executeTransaction(
+                                await getGrpcClient(network).transactionExecutionService.executeTransaction(
                                     {
                                         transaction: {
                                             bcs: { value: txBytes },
@@ -123,7 +124,7 @@ export function Story4() {
                                 );
 
                             console.log("gRPC Transaction successful:", result);
-                            const digest = result.response.transaction?.effects?.digest;
+                            const digest = result.response.transaction?.effects?.transactionDigest;
                             if (digest) {
                                 setSuccessDigest(digest);
                             } else {

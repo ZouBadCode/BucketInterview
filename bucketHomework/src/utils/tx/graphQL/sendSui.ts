@@ -18,11 +18,11 @@ export const EXECUTE_TX = `
 `;
 
 
-export async function executeTx_gql(txBcs: string, sig: string) {
+export async function executeTx_gql(txBcs: string, sig: string, network: string) {
     const { data, error } = await gqlMutate(EXECUTE_TX, {
         transactionDataBcs: txBcs,
         signatures: [sig],
-    });
+    }, network);
 
     if (error) {
         throw new Error(`GraphQL TX Error: ${JSON.stringify(error)}`);

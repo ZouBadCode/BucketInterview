@@ -28,6 +28,11 @@ export function Navbar() {
                 ctx.selectNetwork("testnet");
             }
         }
+        if (location.pathname === "/2" || location.pathname === "/3") {
+            if (queryMethod !== "gRPC") {
+                setQueryMethod("gRPC");
+            }
+        }
     }, [location.pathname]);
 
     const handleNetworkChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -42,7 +47,7 @@ export function Navbar() {
     };
 
     const isNetworkDisabled = location.pathname === "/2" || location.pathname === "/3";
-
+    const isQueryMethodDisabled = location.pathname === "/2" || location.pathname === "/3";
     return (
         <nav className="bg-blue-600 p-4 text-white flex justify-between items-center">
             {/* Title */}
@@ -62,8 +67,9 @@ export function Navbar() {
             {/* Selector 選query method */}
                 <select
                     value={queryMethod}
+                    disabled={isQueryMethodDisabled}
                     onChange={(e) => setQueryMethod(e.target.value)}
-                    className="bg-blue-700 text-white px-2 py-1 rounded cursor-pointer focus:outline-none"
+                    className={`bg-blue-700 text-white px-2 py-1 rounded cursor-pointer focus:outline-none ${isQueryMethodDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                     <option value="json-rpc">JSON-RPC</option>
                     <option value="gRPC">gRPC</option>

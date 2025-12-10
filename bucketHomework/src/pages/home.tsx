@@ -28,8 +28,8 @@ export function Home() {
                 setSuiBalance(balance.totalBalance);
             });
         } else if (queryMethod === "graphQL") {
-            const res = getSuiBalance_gql(currentAccount.address)
-            const metadata = getCoinMetadata_gql("0x2::sui::SUI");
+            const res = getSuiBalance_gql(currentAccount.address, network)
+            const metadata = getCoinMetadata_gql("0x2::sui::SUI", network);
             res.then(balance=> {
                 setSuiBalance(balance.address?.balance?.totalBalance); // todo: type definition
             })
@@ -38,8 +38,8 @@ export function Home() {
                 setDecimals(decimals);
             });
         } else if (queryMethod === "gRPC") {
-            const res = getSuiBalance_grpc(currentAccount.address);
-            const metadata = getCoinMetadata_grpc("0x2::sui::SUI");
+            const res = getSuiBalance_grpc(currentAccount.address, network);
+            const metadata = getCoinMetadata_grpc("0x2::sui::SUI", network);
             res.then(balance => {
                 setSuiBalance(balance); // totalBalance in gRPC response
             }
