@@ -1,4 +1,4 @@
-import { type SuiClient, type CoinBalance } from "@mysten/sui/client";
+import { type SuiClient } from "@mysten/sui/client";
 
 export async function getCoinMetadata(suiClient: SuiClient, coinType: string) {
     const coinMetadata = await suiClient.getCoinMetadata({
