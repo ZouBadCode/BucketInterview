@@ -1,6 +1,7 @@
-import { ConnectButton } from "@mysten/dapp-kit";
+import { ConnectButton, useSuiClientContext } from "@mysten/dapp-kit";
 import { useDAppConfig } from "../stores/dAppConfig";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const route = [
     { path: "/", name: "story one"},
@@ -13,7 +14,35 @@ export function Navbar() {
     const { network, setNetwork, queryMethod, setQueryMethod} = useDAppConfig();
     const navigate = useNavigate();
     const location = useLocation();
-    
+    const ctx = useSuiClientContext();
+
+    useEffect(() => {
+        if (location.pathname === "/" || location.pathname === "/2") {
+            if (network !== "mainnet") {
+                setNetwork("mainnet");
+                ctx.selectNetwork("mainnet");
+            }
+        } else if (location.pathname === "/3" || location.pathname === "/4") {
+            if (network !== "testnet") {
+                setNetwork("testnet");
+                ctx.selectNetwork("testnet");
+            }
+        }
+    }, [location.pathname]);
+
+    const handleNetworkChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newNetwork = e.target.value;
+        if (location.pathname === "/" || location.pathname === "/4") {
+            if (!window.confirm("This story can support other networks, but doesn't meet the requirements of the homework. Are you sure to switch the network?")) {
+                return;
+            }
+        }
+        setNetwork(newNetwork);
+        ctx.selectNetwork(newNetwork);
+    };
+
+    const isNetworkDisabled = location.pathname === "/2" || location.pathname === "/3";
+
     return (
         <nav className="bg-blue-600 p-4 text-white flex justify-between items-center">
             {/* Title */}
@@ -22,8 +51,9 @@ export function Navbar() {
             <div className="flex items-center gap-4">
                 <select
                     value={network}
-                    onChange={(e) => setNetwork(e.target.value)}
-                    className="bg-blue-700 text-white px-2 py-1 rounded cursor-pointer focus:outline-none"
+                    onChange={handleNetworkChange}
+                    disabled={isNetworkDisabled}
+                    className={`bg-blue-700 text-white px-2 py-1 rounded cursor-pointer focus:outline-none ${isNetworkDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                     <option value="mainnet">Mainnet</option>
                     <option value="testnet">Testnet</option>
