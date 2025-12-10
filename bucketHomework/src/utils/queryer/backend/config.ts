@@ -1,0 +1,1 @@
+export const baseurl = "discerning-amazement-production.up.railway.app";
