@@ -6,7 +6,7 @@ export function Story2() {
     const [balances, setBalances] = useState<any>("");
 
     useEffect(() => {
-        if (address.slice(2) === "0x") {
+        if (address.slice(0,2) === "0x") {
             getAccountBalance(address).then((data) => {
                 setBalances(data);
                 console.log(data);

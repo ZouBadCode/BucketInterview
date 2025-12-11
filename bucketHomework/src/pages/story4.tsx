@@ -45,7 +45,7 @@ export function Story4() {
             alert("Please enter a valid address and amount.");
             return;
         }
-        if (!(toAddress.slice(2) === "0x")) {
+        if (!(toAddress.slice(0,2) === "0x")) {
             return alert("Please enter a valid SUI address.");
         }
         const tx = createSendSui(toAddress, amount);
