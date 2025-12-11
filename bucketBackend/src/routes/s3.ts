@@ -2,6 +2,8 @@ import { Router, Request, Response } from "express";
 import { testnetGRPC } from "../libs/client";
 const route = Router();
 
+// GET /s3/getField
+// response: { field: any }
 route.get('/getField', async (req: Request, res: Response) => {
     try {
         const fieldData = await getVaultField();
@@ -12,6 +14,7 @@ route.get('/getField', async (req: Request, res: Response) => {
     }
 });
 
+// Helper function to get vault field data by grpc
 async function getVaultField(): Promise<any> {
     const response = await testnetGRPC.ledgerService.getObject({
         objectId: "0xeeb34a78eaf4ae873c679db294296778676de4a335f222856716d1ad6ed54e45",

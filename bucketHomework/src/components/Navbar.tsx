@@ -3,6 +3,7 @@ import { useDAppConfig } from "../stores/dAppConfig";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+// router show on selector
 const route = [
     { path: "/", name: "story one"},
     { path: "/2", name: "story two"},
@@ -11,11 +12,12 @@ const route = [
 ]
 
 export function Navbar() {
-    const { network, setNetwork, queryMethod, setQueryMethod} = useDAppConfig();
+    const { network, setNetwork, queryMethod, setQueryMethod} = useDAppConfig(); //dapp config store
     const navigate = useNavigate();
     const location = useLocation();
-    const ctx = useSuiClientContext();
+    const ctx = useSuiClientContext(); // sui client context
 
+    // network, rpc method auto select
     useEffect(() => {
         if (location.pathname === "/" || location.pathname === "/2") {
             if (network !== "mainnet") {
@@ -35,6 +37,7 @@ export function Navbar() {
         }
     }, [location.pathname]);
 
+    // network change handler with confirmation for story 1 and 4
     const handleNetworkChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newNetwork = e.target.value;
         if (location.pathname === "/" || location.pathname === "/4") {

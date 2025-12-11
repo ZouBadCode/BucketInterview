@@ -5,7 +5,7 @@ import { isValidSuiAddress } from "@mysten/sui/utils";
 export function Story2() {
     const [address, setAddress] = useState("");
     const [balances, setBalances] = useState<any>("");
-
+    // fetch backend account balance when address changes
     useEffect(() => {
         if (isValidSuiAddress(address)) {
             getAccountBalance(address).then((data) => {

@@ -4,6 +4,9 @@ import { toJSONSafe } from "../utils/json_helper";
 
 const router = Router();
 
+// post /account/balance
+// body: { address: string }
+// response: { success: boolean, balances: Array<{ coinType: string, balance: string, coinInfo: any }> }
 router.post(
   "/balance",
   async (req: Request, res: Response) => {
@@ -35,6 +38,7 @@ router.post(
   }
 );
 
+// Helper function to get all balances by grpc
 async function getAllBalance(address: string) {
   const response = await mainnetGRPC.stateService.listBalances({
     owner: address
@@ -57,7 +61,7 @@ async function getAllBalance(address: string) {
   return balancesWithInfo;
 }
 
-
+// Helper function to get coin info by grpc
 async function getCoinInfo(coinType: string) {
   const response = await mainnetGRPC.stateService.getCoinInfo({
     coinType: coinType

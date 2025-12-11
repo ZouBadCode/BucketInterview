@@ -15,7 +15,8 @@ export function Home() {
     const [suiBalance, setSuiBalance] = useState("");
     const [decimals, setDecimals] = useState<number>(0);
     const { network, queryMethod } = useDAppConfig();
-
+    
+    // fetch sui balance when account, network or query method changes
     useEffect(() => {
         if (!currentAccount) return;
         if (queryMethod === "json-rpc") {

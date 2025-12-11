@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+// global dApp configuration store
 type DAppConfigState = {
     network: string;
     setNetwork: (network: string) => void;

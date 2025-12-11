@@ -20,6 +20,7 @@ export function Story4() {
     const { mutate: signTransaction } = useSignTransaction();
     const sender = useCurrentAccount();
 
+    // Explorer base URL based on network
     const explorerBaseUrl = useMemo(() => {
         switch (network) {
             case "testnet":
@@ -32,11 +33,13 @@ export function Story4() {
         }
     }, [network]);
 
+    // Full explorer URL for the successful transaction
     const explorerUrl = useMemo(() => {
         if (!successDigest) return null;
         return `${explorerBaseUrl}/${successDigest}`;
     }, [explorerBaseUrl, successDigest]);
 
+    // Send SUI Transaction
     async function sendSui() {
         setSuccessDigest(null);
         setErrorMessage("");

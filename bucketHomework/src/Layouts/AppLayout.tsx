@@ -13,5 +13,3 @@ const AppLayout = () => {
 };
 
 export default AppLayout;
-
-//AppLayout is a basic layout prepare for future modification

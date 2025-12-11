@@ -1,3 +1,4 @@
+// Helper function to convert bigint to string for JSON serialization
 export function toJSONSafe<T>(data: T): T {
   if (data === null || data === undefined) {
     return data;

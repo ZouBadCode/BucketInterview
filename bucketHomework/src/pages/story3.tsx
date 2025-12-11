@@ -8,6 +8,7 @@ export function Story3() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // get vault field data on component mount from backend
     useEffect(() => {
         async function fetchData() {
             try {
