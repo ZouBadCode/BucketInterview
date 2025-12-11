@@ -8,7 +8,7 @@ import {
 import { createSendSui } from "../utils/tx/sendSui";
 import { executeTx_gql } from "../utils/tx/graphQL/sendSui";
 import { getGrpcClient } from "../lib/gRPC";
-import { fromBase64 } from "@mysten/sui/utils";
+import { fromBase64, isValidSuiAddress } from "@mysten/sui/utils";
 
 export function Story4() {
     const [toAddress, setToAddress] = useState("");
@@ -45,7 +45,7 @@ export function Story4() {
             alert("Please enter a valid address and amount.");
             return;
         }
-        if (!(toAddress.slice(0,2) === "0x")) {
+        if (!(isValidSuiAddress(toAddress))) {
             return alert("Please enter a valid SUI address.");
         }
         const tx = createSendSui(toAddress, amount);

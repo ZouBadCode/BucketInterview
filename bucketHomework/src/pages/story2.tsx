@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { getAccountBalance } from "../utils/queryer/backend/getAccountBalance";
 import { decimalizeBalance } from "../utils/decimalize";
+import { isValidSuiAddress } from "@mysten/sui/utils";
 export function Story2() {
     const [address, setAddress] = useState("");
     const [balances, setBalances] = useState<any>("");
 
     useEffect(() => {
-        if (address.slice(0,2) === "0x") {
+        if (isValidSuiAddress(address)) {
             getAccountBalance(address).then((data) => {
                 setBalances(data);
                 console.log(data);
