@@ -33,9 +33,9 @@ export function Story2() {
                     {balances?.balances?.length > 0 ? (
                         balances.balances.map((b: any, i: number) => (
                             <div key={i} className="border p-3 rounded-md mt-2 text-sm bg-gray-50">
-                                <img src={b.coinInfo.metadata.iconUrl} alt="no image" width={24} height={24} className="inline-block mr-2 align-middle" />
+                                <img src={b.coinInfo ? b.coinInfo.metadata.iconUrl : ""} alt="no image" width={24} height={24} className="inline-block mr-2 align-middle" />
                                 <p className="break-all"><span className="font-semibold">Coin:</span> {b.coinType}</p>
-                                <p className="break-all"><span className="font-semibold">Balance:</span> {decimalizeBalance(b.balance, b.coinInfo.metadata.decimals)}</p>
+                                <p className="break-all"><span className="font-semibold">Balance:</span> {b.coinInfo ? decimalizeBalance(b.balance, b.coinInfo.metadata.decimals) : b.balance}</p>
                             </div>
                         ))
                     ) : (
