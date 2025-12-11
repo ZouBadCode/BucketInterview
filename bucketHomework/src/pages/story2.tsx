@@ -6,10 +6,14 @@ export function Story2() {
     const [balances, setBalances] = useState<any>("");
 
     useEffect(() => {
-        getAccountBalance(address).then((data) => {
-            setBalances(data);
-            console.log(data);
-        })
+        if (address.slice(2) === "0x") {
+            getAccountBalance(address).then((data) => {
+                setBalances(data);
+                console.log(data);
+            })
+        } else {
+            setBalances(null);
+        }
     }, [address])
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
